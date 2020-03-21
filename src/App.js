@@ -5,6 +5,11 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import themeFile from './util/theme';
 import jwtDecode from 'jwt-decode';
+
+// Redux
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 // Components
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
@@ -17,6 +22,7 @@ import signup from './pages/signup';
 // Create my own theme later using Material-UI
 const theme = createMuiTheme(themeFile);
 
+// TODO: Expired token functionality is broken
 let authenticated;
 const token = localStorage.FBIdToken;
 if(token) {
@@ -33,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <div className="App">
+        <Provider store={store}>
           <Router>
             <Navbar/>
             <div className="container">
@@ -44,7 +50,7 @@ class App extends Component {
               </Switch>
             </div>
           </Router>
-        </div>
+        </Provider>
       </MuiThemeProvider>
     );
   }
