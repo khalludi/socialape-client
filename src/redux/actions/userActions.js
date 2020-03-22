@@ -47,10 +47,21 @@ export const getUserData = () => (dispatch) => {
     dispatch({ type: LOADING_USER })
     axios.get('/user')
         .then(res => {
+            console.log(res);
             dispatch({
                 type: SET_USER,
                 payload: res.data
             })
+        })
+        .catch(err => console.log(err));
+}
+
+export const uploadImage = (formData) => (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    axios.post('/user/image', formData)
+        .then(res => {
+            console.log(res);
+            dispatch(getUserData());
         })
         .catch(err => console.log(err));
 }
